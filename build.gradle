@@ -1,0 +1,34 @@
+plugins {
+	id 'org.springframework.boot' version '2.0.6.RELEASE'
+}
+
+// Artifact Id
+group = 'gemeente'
+version = '0.0.1-SNAPSHOT'
+
+
+// Plugins
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+
+
+bootJar {
+	mainClassName = 'gemeente.authorizationserver.AuthorizationserverApplication'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('com.google.guava:guava:27.0-jre')
+	runtime('org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+}

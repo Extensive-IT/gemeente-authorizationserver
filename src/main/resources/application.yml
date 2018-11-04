@@ -1,0 +1,23 @@
+# OAuth2 AuthorizationService Clients
+oauth2:
+  clients:
+    registeredClients[0]:
+      clientId: first-app
+      secret: '12345'
+      authorizedGrantTypes:
+        - authorization_code
+        - refresh_token
+        - password
+      authorities:
+        - SupplyForm
+      scopes:
+        - apiX
+      autoApprove: true
+
+server:
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    org: INFO
