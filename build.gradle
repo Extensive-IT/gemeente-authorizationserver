@@ -1,5 +1,6 @@
 plugins {
 	id 'org.springframework.boot' version '2.0.6.RELEASE'
+	id 'com.palantir.docker' version '0.20.1'
 }
 
 // Artifact Id
@@ -10,12 +11,23 @@ version = '0.0.1-SNAPSHOT'
 // Plugins
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
 
 sourceCompatibility = 1.8
 
-
 bootJar {
 	mainClassName = 'gemeente.authorizationserver.AuthorizationserverApplication'
+}
+
+task unpack(type: Copy) {
+	dependsOn bootJar
+	from(zipTree(tasks.bootJar.outputs.files.singleFile))
+	into("build/dependency")
+}
+docker {
+	name "${project.group}/${bootJar.baseName}"
+	copySpec.from(tasks.unpack.outputs).into("dependency")
+	buildArgs(['DEPENDENCY': "dependency"])
 }
 
 repositories {
