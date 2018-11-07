@@ -11,6 +11,7 @@ class RegisteredClientConfiguration {
     private List<String> authorities;
     private List<String> scopes;
     private Boolean autoApprove;
+    private List<String> registeredRedirectUris;
 
     public String getClientId() {
         return clientId;
@@ -58,6 +59,14 @@ class RegisteredClientConfiguration {
 
     public void setAutoApprove(Boolean autoApprove) {
         this.autoApprove = autoApprove;
+    }
+
+    public List<String> getRegisteredRedirectUris() {
+        return registeredRedirectUris;
+    }
+
+    public void setRegisteredRedirectUris(List<String> registeredRedirectUris) {
+        this.registeredRedirectUris = registeredRedirectUris;
     }
 
     public String toString() {

@@ -13,6 +13,8 @@ oauth2:
       scopes:
         - apiX
       autoApprove: true
+      registeredRedirectUris:
+        - http://gemeente-akb:8080/login/gemeente
 
 server:
   servlet:
@@ -20,4 +22,4 @@ server:
 
 logging:
   level:
-    org: INFO
+    org: DEBUG

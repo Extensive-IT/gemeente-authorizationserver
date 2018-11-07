@@ -48,7 +48,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authorities(
                     Iterables.toArray(registeredClientConfiguration.getAuthorities(), String.class))
                 .scopes(Iterables.toArray(registeredClientConfiguration.getScopes(), String.class))
-                .autoApprove(registeredClientConfiguration.getAutoApprove());
+                .autoApprove(registeredClientConfiguration.getAutoApprove())
+                .redirectUris(Iterables.toArray(registeredClientConfiguration.getRegisteredRedirectUris(), String.class));
         });
     }
 
