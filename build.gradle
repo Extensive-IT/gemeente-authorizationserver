@@ -1,46 +1,19 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.0.RELEASE'
-	id 'com.palantir.docker' version '0.20.1'
 }
 
-// Artifact Id
-group = 'gemeente'
-version = '0.0.1-SNAPSHOT'
-
-
-// Plugins
-apply plugin: 'java'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.palantir.docker'
-
-sourceCompatibility = 1.8
-
-bootJar {
-	mainClassName = 'gemeente.authorizationserver.AuthorizationserverApplication'
+allprojects {
+	repositories {
+		mavenCentral()
+	}
 }
 
-task unpack(type: Copy) {
-	dependsOn bootJar
-	from(zipTree(tasks.bootJar.outputs.files.singleFile))
-	into("build/dependency")
-}
-docker {
-	name "${project.group}/${bootJar.baseName}"
-	copySpec.from(tasks.unpack.outputs).into("dependency")
-	buildArgs(['DEPENDENCY': "dependency"])
+subprojects {
+	version = '1.0'
+
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+
+	sourceCompatibility = 1.8
 }
 
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation('org.springframework.boot:spring-boot-starter-security')
-	implementation('org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE')
-	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
-	implementation('com.google.guava:guava:27.0-jre')
-	runtime('org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation('org.springframework.security:spring-security-test')
-}

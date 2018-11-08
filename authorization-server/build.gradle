@@ -1,0 +1,34 @@
+plugins {
+	id 'com.palantir.docker' version '0.20.1'
+	id 'org.springframework.boot'
+}
+
+apply plugin: 'com.palantir.docker'
+
+bootJar {
+	mainClassName = 'gemeente.authorizationserver.AuthorizationserverApplication'
+}
+
+task unpack(type: Copy) {
+	dependsOn bootJar
+	from(zipTree(tasks.bootJar.outputs.files.singleFile))
+	into("build/dependency")
+}
+
+docker {
+	name "gemeente/authorizationserver"
+	copySpec.from(tasks.unpack.outputs).into("dependency")
+	buildArgs(['DEPENDENCY': "dependency"])
+}
+
+dependencies {
+	implementation project(':authorization-api-library')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('com.google.guava:guava:27.0-jre')
+	runtime('org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+}

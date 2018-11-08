@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCo
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+import static gemeente.authorizationserver.conf.ResourceServerConfiguration.RESOURCE_ID;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -42,29 +44,31 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         clientDetailsConfiguration.getRegisteredClients().forEach(registeredClientConfiguration -> {
             builder.withClient(registeredClientConfiguration.getClientId())
-                .secret(passwordEncoder.encode(registeredClientConfiguration.getSecret()))
-                .authorizedGrantTypes(Iterables
-                    .toArray(registeredClientConfiguration.getAuthorizedGrantTypes(), String.class))
-                .authorities(
-                    Iterables.toArray(registeredClientConfiguration.getAuthorities(), String.class))
-                .scopes(Iterables.toArray(registeredClientConfiguration.getScopes(), String.class))
-                .autoApprove(registeredClientConfiguration.getAutoApprove())
-                .redirectUris(Iterables.toArray(registeredClientConfiguration.getRegisteredRedirectUris(), String.class));
+                    .secret(passwordEncoder.encode(registeredClientConfiguration.getSecret()))
+                    .resourceIds(RESOURCE_ID)
+                    .authorizedGrantTypes(Iterables
+                            .toArray(registeredClientConfiguration.getAuthorizedGrantTypes(), String.class))
+                    .authorities(
+                            Iterables.toArray(registeredClientConfiguration.getAuthorities(), String.class))
+                    .scopes(Iterables.toArray(registeredClientConfiguration.getScopes(), String.class))
+                    .autoApprove(registeredClientConfiguration.getAutoApprove())
+                    .redirectUris(Iterables.toArray(registeredClientConfiguration.getRegisteredRedirectUris(), String.class));
         });
     }
 
     @Override
     public void configure(
-        final AuthorizationServerSecurityConfigurer authorizationServerSecurityConfigurer)
-        throws Exception {
-        authorizationServerSecurityConfigurer.tokenKeyAccess("permitAll()")
-            .checkTokenAccess("isAuthenticated()").passwordEncoder(passwordEncoder);
+            final AuthorizationServerSecurityConfigurer authorizationServerSecurityConfigurer)
+            throws Exception {
+        authorizationServerSecurityConfigurer.passwordEncoder(passwordEncoder).realm("auth/client");
+        // tokenKeyAccess("permitAll()")
+        //                .checkTokenAccess("isAuthenticated()")
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(tokenStore()).userApprovalHandler(userApprovalHandler()).authenticationManager(authenticationManager)
-            .authorizationCodeServices(authorizationCodeServices());
+                .authorizationCodeServices(authorizationCodeServices());
     }
 
     @Bean

@@ -1,0 +1,11 @@
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+jar {
+    baseName = 'authorization-api-library'
+    version = '1.0'
+}
+
+dependencies {
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.9.0')
+}

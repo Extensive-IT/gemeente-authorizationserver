@@ -11,15 +11,17 @@ oauth2:
       authorities:
         - SupplyForm
       scopes:
-        - apiX
+        - read
       autoApprove: true
       registeredRedirectUris:
+        - http://gemeente-akb:8081/login/gemeente
         - http://gemeente-akb:8080/login/gemeente
 
 server:
+  port: 8080
   servlet:
     context-path: /
 
 logging:
   level:
-    org: DEBUG
+    org: INFO

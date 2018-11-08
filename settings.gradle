@@ -1,1 +1,5 @@
-rootProject.name = 'authorizationserver'
+rootProject.name = 'authorizationserver-multi'
+include 'authorization-api-library'
+include 'authorization-server'
+
+
