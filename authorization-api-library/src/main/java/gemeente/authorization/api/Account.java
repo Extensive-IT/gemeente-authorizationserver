@@ -1,4 +1,4 @@
-package gemeente.authorizationserver.service;
+package gemeente.authorization.api;
 
 import java.util.UUID;
 

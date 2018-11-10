@@ -2,7 +2,8 @@ package gemeente.authorizationserver.controller;
 
 import java.security.Principal;
 
-import gemeente.authorizationserver.service.Account;
+import gemeente.authorization.api.AccountInformationResponse;
+import gemeente.authorization.api.Account;
 import gemeente.authorizationserver.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,8 @@ public class UserController {
     }
 
     @GetMapping("/user/account")
-    public Object getAccountInformation(final Principal principal) {
+    public AccountInformationResponse getAccountInformation(final Principal principal) {
         final Account account = this.accountService.getAccount(principal.getName());
-        return account;
+        return new AccountInformationResponse(account);
     }
 }

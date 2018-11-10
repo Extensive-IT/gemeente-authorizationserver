@@ -17,6 +17,16 @@ oauth2:
         - http://gemeente-akb:8081/login/gemeente
         - http://gemeente-akb:8080/login/gemeente
 
+datasource:
+  users:
+    type: com.zaxxer.hikari.HikariDataSource
+    jdbc-url: jdbc:mysql://db/gemeente-users
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: 'gemeente-users'
+    password: 'gemeente-users'
+    hikari:
+      idle-timeout: 10000
+
 server:
   port: 8080
   servlet:
