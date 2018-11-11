@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 name='dev-mysql'
 [[ $(docker ps -f "name=$name" --format '{{.Names}}') == $name ]] ||
-docker run --name dev-mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0.3
+docker run --name dev-mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql:8.0.3
 
 name='dev-phpmyadmin'
 [[ $(docker ps -f "name=$name" --format '{{.Names}}') == $name ]] ||
