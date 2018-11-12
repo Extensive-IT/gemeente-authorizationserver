@@ -4,12 +4,15 @@
 
     <body class="text-center">
         <form class="form-signin" action="#" th:action="@{/login}" method="post">
-            <!--
-            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-            -->
+
+            <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
             <h1 class="h3 mb-3 font-weight-normal">Inloggen</h1>
+            <span th:text="${introduction}" th:unless="${#strings.isEmpty(introduction)}">Introduction</span>
+            <div th:if="${#request.getParameter('authentication_error')}" class="alert alert-danger">
+                <strong>Het inloggen is niet gelukt, probeer nogmaals.</strong>
+            </div>
             <label for="username" class="sr-only">Emailaddres</label>
-            <input id="username" name="username" type="email" class="form-control" placeholder="gebruiker@domein.nl" required autofocus>
+            <input id="username" name="username" type="text" class="form-control" placeholder="gebruiker@domein.nl" required autofocus>
 
             <label for="password" class="sr-only">Wachtwoord</label>
             <input id="password" name="password" type="password" class="form-control" placeholder="Wachtwoord" required>

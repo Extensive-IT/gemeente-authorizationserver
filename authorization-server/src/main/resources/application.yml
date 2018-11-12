@@ -32,6 +32,13 @@ server:
   servlet:
     context-path: /
 
+content:
+  resources:
+    directory: /home/jelle/Environment/
+  login:
+    introduction: Welkom bij de Ichthus Gemeente website. Hier kunt u inloggen, of zichzelf aanmelden om toegang te krijgen tot de extra online diensten (o.a. AKB, foto's, etc).
+
 logging:
   level:
-    org: INFO
+    org:
+      springframework: INFO
