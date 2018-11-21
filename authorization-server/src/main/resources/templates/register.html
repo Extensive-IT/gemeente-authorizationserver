@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head th:replace="~{generic :: htmlheader}"></head>
+
+    <body class="text-center">
+        <form th:action="@{/user/register}" th:object="${user}" method="post" enctype="utf8" class="form-signin">
+            <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
+            <h1 class="h3 mb-3 font-weight-normal">Registreer</h1>
+            <span th:text="${introduction}" th:unless="${#strings.isEmpty(introduction)}">Introduction</span>
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <strong>Het registreren is niet gelukt omdat niet alle velden juist zijn ingevuld. Probeer nogmaals.</strong>
+            </div>
+
+            <label for="userName" class="sr-only">Gebruikersnaam</label>
+            <input type="text" th:field="*{userName}" id="userName" />
+
+            <label for="email" class="sr-only">E-mailadres</label>
+            <input type="email" th:field="*{email}" id="email" />
+
+            <label for="password" class="sr-only">Wachtwoord</label>
+            <input type="password" th:field="*{password}" id="password"/>
+
+            <label for="matchingPassword" class="sr-only">Bevestig wachtwoord</label>
+            <input type="password" th:field="*{matchingPassword}" id="matchingPassword"/>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Registreren</button>
+        </form>
+    </body>
+</html>
