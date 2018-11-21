@@ -16,6 +16,7 @@ oauth2:
       registeredRedirectUris:
         - http://gemeente-akb:8081/login/gemeente
         - http://gemeente-akb:8080/login/gemeente
+        - http://gemeente-akb/login/gemeente
 
 datasource:
   users:

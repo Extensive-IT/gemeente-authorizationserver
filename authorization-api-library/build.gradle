@@ -1,5 +1,21 @@
+plugins {
+    id 'maven-publish'
+}
+
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.gemeente'
+            artifactId = 'authorization-api-library'
+            version = '1.0'
+
+            from components.java
+        }
+    }
+}
 
 jar {
     baseName = 'authorization-api-library'
