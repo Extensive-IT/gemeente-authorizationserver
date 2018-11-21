@@ -60,9 +60,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(
             final AuthorizationServerSecurityConfigurer authorizationServerSecurityConfigurer)
             throws Exception {
-        authorizationServerSecurityConfigurer.passwordEncoder(passwordEncoder).realm("auth/client");
-        // tokenKeyAccess("permitAll()")
-        //                .checkTokenAccess("isAuthenticated()")
+        authorizationServerSecurityConfigurer.passwordEncoder(passwordEncoder).realm("auth/client")
+        .tokenKeyAccess("permitAll()")
+                        .checkTokenAccess("isAuthenticated()");
     }
 
     @Override
