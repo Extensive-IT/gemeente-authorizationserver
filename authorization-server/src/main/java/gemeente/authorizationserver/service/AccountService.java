@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class AccountService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserDetailsManager userDetailsManager;
+    private AccountJdbcUserDetailsManager accountJdbcUserDetailsManager;
 
     /**
      * Get account by username
@@ -52,12 +51,12 @@ public class AccountService {
     }
 
     public void createUser(final Account account, final String userName, final String password) throws AccountCreationException {
-        if (userDetailsManager.userExists(userName)) {
+        if (accountJdbcUserDetailsManager.userExists(userName)) {
             throw new AccountCreationException("User " + userName + " already exists.");
         }
         try {
             final SimpleGrantedAuthority authority = new SimpleGrantedAuthority("USER");
-            userDetailsManager.createUser(new User(userName, passwordEncoder.encode(password), Arrays.asList(authority)));
+            accountJdbcUserDetailsManager.createUser(new User(userName, passwordEncoder.encode(password), Arrays.asList(authority)), account);
         }
         catch (RuntimeException e) {
             throw new AccountCreationException("User cannot be created at the moment, due: " + e.getMessage());

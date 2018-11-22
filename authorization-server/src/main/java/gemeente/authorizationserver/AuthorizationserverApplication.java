@@ -1,5 +1,6 @@
 package gemeente.authorizationserver;
 
+import gemeente.authorizationserver.service.AccountJdbcUserDetailsManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +26,7 @@ public class AuthorizationserverApplication implements WebMvcConfigurer {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		final JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(primaryUserDataSource());
+		final JdbcUserDetailsManager jdbcUserDetailsManager = new AccountJdbcUserDetailsManager(primaryUserDataSource());
 		return jdbcUserDetailsManager;
 	}
 

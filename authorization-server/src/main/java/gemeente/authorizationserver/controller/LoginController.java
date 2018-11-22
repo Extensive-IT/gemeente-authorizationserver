@@ -65,7 +65,7 @@ public class LoginController {
             bindingResult.rejectValue("userName", "", e.getMessage());
             return showRegisterPage(model);
         }
-        return "/show-login";
+        return "redirect:/show-login";
     }
 
     private String showRegisterPage(final Map<String, Object> model) {
