@@ -3,7 +3,7 @@
     <head th:replace="~{generic :: htmlheader}"></head>
 
     <body class="text-center">
-        <form class="form-signin" action="#" th:action="@{/login}" method="post">
+        <form class="form-signin" th:action="@{/login}" method="post">
 
             <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
             <h1 class="h3 mb-3 font-weight-normal">Inloggen</h1>

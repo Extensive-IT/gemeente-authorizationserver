@@ -30,6 +30,7 @@ CREATE TABLE `accounts` (
   `address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `postal_code` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   primary key (`id`),
   unique key (`registration_reference`)
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

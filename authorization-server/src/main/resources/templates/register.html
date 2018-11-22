@@ -3,25 +3,33 @@
     <head th:replace="~{generic :: htmlheader}"></head>
 
     <body class="text-center">
-        <form th:action="@{/user/register}" th:object="${user}" method="post" enctype="utf8" class="form-signin">
+        <form th:action="@{/register}" th:object="${user}" method="post" enctype="utf8" class="form-signin">
             <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
             <h1 class="h3 mb-3 font-weight-normal">Registreer</h1>
             <span th:text="${introduction}" th:unless="${#strings.isEmpty(introduction)}">Introduction</span>
             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                <strong>Het registreren is niet gelukt omdat niet alle velden juist zijn ingevuld. Probeer nogmaals.</strong>
+                <strong>Het registreren is niet gelukt omdat niet alle velden juist zijn ingevuld. Probeer
+                    nogmaals.</strong>
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                </ul>
             </div>
-
+            <br />
             <label for="userName" class="sr-only">Gebruikersnaam</label>
-            <input type="text" th:field="*{userName}" id="userName" />
+            <input type="text" th:field="*{userName}" id="userName" class="form-control"
+                   placeholder="Kies een gebruikersnaam" required autofocus/>
 
             <label for="email" class="sr-only">E-mailadres</label>
-            <input type="email" th:field="*{email}" id="email" />
+            <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Uw e-mailadres"
+                   required/>
 
             <label for="password" class="sr-only">Wachtwoord</label>
-            <input type="password" th:field="*{password}" id="password"/>
+            <input type="password" th:field="*{password}" id="password" class="form-control"
+                   placeholder="Kies een wachtwoord" required/>
 
             <label for="matchingPassword" class="sr-only">Bevestig wachtwoord</label>
-            <input type="password" th:field="*{matchingPassword}" id="matchingPassword"/>
+            <input type="password" th:field="*{matchingPassword}" id="matchingPassword" class="form-control"
+                   placeholder="Bevestig uw wachtwoord" required/>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Registreren</button>
         </form>
