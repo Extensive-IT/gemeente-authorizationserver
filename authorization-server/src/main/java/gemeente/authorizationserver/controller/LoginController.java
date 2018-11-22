@@ -25,6 +25,9 @@ public class LoginController {
     @Value("${content.login.introduction:}")
     private String loginIntroduction;
 
+    @Value("${content.login.not-registered:}")
+    private String notRegisteredIntroduction;
+
     @Value("${content.register.introduction:}")
     private String registerIntroduction;
 
@@ -35,6 +38,7 @@ public class LoginController {
     public String login(final Map<String, Object> model) {
         model.put("logo", pathLogo);
         model.put("introduction", loginIntroduction);
+        model.put("notRegisteredIntroduction", notRegisteredIntroduction);
         return "login";
     }
 

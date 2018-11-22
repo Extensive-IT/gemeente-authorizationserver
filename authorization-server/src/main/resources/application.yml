@@ -38,6 +38,7 @@ content:
     directory: /home/jelle/Environment/
   login:
     introduction: Welkom bij de Ichthus Gemeente website. Hier kunt u inloggen om toegang te krijgen tot de online diensten (o.a. AKB, foto's, etc).
+    not-registered: Heeft u nog geen account bij de Ichthus Gemeente, registreer u dan eerst.
   register:
     introduction: Welkom bij de Ichthus Gemeente website. U moet zich registreren alvorens u toegang kan krijgen tot de online diensten (o.a. AKB, foto's, etc).
 

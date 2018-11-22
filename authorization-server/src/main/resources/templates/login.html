@@ -3,11 +3,15 @@
     <head th:replace="~{generic :: htmlheader}"></head>
 
     <body class="text-center">
+        <div class="signin-header">
+            <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
+            <p class="lead" th:text="${introduction}" th:unless="${#strings.isEmpty(introduction)}">Introduction</p>
+            <p class="lead" th:text="${notRegisteredIntroduction}"></p>
+            <a th:href="@{/register}">Registreer hier</a>
+        </div>
         <form class="form-signin" th:action="@{/login}" method="post">
 
-            <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
             <h1 class="h3 mb-3 font-weight-normal">Inloggen</h1>
-            <span th:text="${introduction}" th:unless="${#strings.isEmpty(introduction)}">Introduction</span>
             <div th:if="${#request.getParameter('authentication_error')}" class="alert alert-danger">
                 <strong>Het inloggen is niet gelukt, probeer nogmaals.</strong>
             </div>
@@ -17,13 +21,6 @@
             <label for="password" class="sr-only">Wachtwoord</label>
             <input id="password" name="password" type="password" class="form-control" placeholder="Wachtwoord" required>
 
-            <!--
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            -->
             <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
             <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
         </form>
