@@ -4,6 +4,7 @@ public class AccountCreationRequest {
     private String emailAddress;
     private String fullName;
     private String registrationReferenceId;
+    private Address address;
 
     public String getEmailAddress() {
         return emailAddress;
@@ -27,5 +28,13 @@ public class AccountCreationRequest {
 
     public void setRegistrationReferenceId(String registrationReferenceId) {
         this.registrationReferenceId = registrationReferenceId;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

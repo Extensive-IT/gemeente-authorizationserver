@@ -37,6 +37,7 @@ public class UserController {
         account.setRegistrationReferenceId(accountCreationRequest.getRegistrationReferenceId());
         account.setEmailAddress(accountCreationRequest.getEmailAddress());
         account.setFullName(accountCreationRequest.getFullName());
+        account.setAddress(accountCreationRequest.getAddress());
         final Account createdAccount = this.accountService.createAccount(account);
         return new AccountInformationResponse(createdAccount);
     }

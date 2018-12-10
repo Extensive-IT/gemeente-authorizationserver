@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Types;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,13 @@ public class AccountService {
 
     public Account createAccount(final Account account) {
         account.setId(UUID.randomUUID());
+
+        // define query arguments
+        final Object[] params = new Object[] { account.getId().toString(), account.getRegistrationReferenceId(), account.getFullName(), account.getAddress().getStreet(), account.getAddress().getPostalCode(), account.getAddress().getCity(), account.getEmailAddress() };
+        final int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
+
+        final int result =
+                this.jdbcTemplate.update("INSERT INTO accounts (id, registration_reference, salutation, address, postal_code, city, email) VALUES (?, ?, ?, ?, ?, ?, ?)", params, types);
         return account;
     }
 
