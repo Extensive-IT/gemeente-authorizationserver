@@ -24,13 +24,13 @@ public class UserController {
         return principal;
     }
 
-    @GetMapping("/user/account")
+    @GetMapping("/user/account/me")
     public AccountInformationResponse getAccountInformation(final Principal principal) {
         final Account account = this.accountService.getAccount(principal.getName());
         return new AccountInformationResponse(account);
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/user/account/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public AccountInformationResponse createAccount(@RequestBody final AccountCreationRequest accountCreationRequest, final Principal principal) {
         final Account account = new Account();
