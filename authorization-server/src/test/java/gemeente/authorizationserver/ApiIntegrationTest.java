@@ -5,6 +5,7 @@ import gemeente.authorization.api.AccountCreationResponse;
 import gemeente.authorization.api.AccountInformationResponse;
 import gemeente.authorizationserver.model.OAuthTokenResponse;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class ApiIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void testLogon() throws Exception {
         final String url = String.format(baseUrl + "oauth/token?grant_type=password&username=%s&password=%s&scope=read", username, password);
         final ResponseEntity<OAuthTokenResponse> response = restTemplate.postForEntity(url, null, OAuthTokenResponse.class);
