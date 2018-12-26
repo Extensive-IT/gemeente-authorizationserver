@@ -59,6 +59,7 @@ public class ApiIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void testGetAccountInformation() {
         final String url = String.format(baseUrl + "user/account?access_token=%s", getToken());
 
@@ -70,6 +71,7 @@ public class ApiIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void testCreateAccount() {
         final AccountCreationRequest request = new AccountCreationRequest();
         request.setFullName("Test");
