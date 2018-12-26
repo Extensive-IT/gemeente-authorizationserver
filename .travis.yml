@@ -15,18 +15,16 @@ after_success:
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - echo $REPO:$TAG:$COMMIT
   - docker build -f ./authorization-server/Dockerfile -t $REPO:$COMMIT ./authorization-server/
-  — docker tag $REPO:$COMMIT $REPO:$TAG
-  — docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  — docker push $REPO
+  - docker push $REPO
 
 #deploy:
 #  provider: script
 #  script: bash docker_push.sh $TRAVIS_BRANCH
 #  on:
 #    all_branches: true
-
-
 
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
