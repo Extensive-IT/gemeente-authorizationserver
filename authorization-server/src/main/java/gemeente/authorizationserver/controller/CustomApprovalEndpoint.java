@@ -1,7 +1,13 @@
 package gemeente.authorizationserver.controller;
 
 import java.util.Map;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+
+import gemeente.authorizationserver.conf.ClientDetailsConfiguration;
+import gemeente.authorizationserver.conf.RegisteredClientConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -17,11 +23,19 @@ import org.springframework.web.util.HtmlUtils;
 @Controller
 public class CustomApprovalEndpoint {
 
+    @Autowired
+    private ClientDetailsConfiguration clientDetailsConfiguration;
+
+    @Value("${content.logo:/resources/img/default-logo.svg}")
+    private String pathLogo;
+
     @RequestMapping("/oauth/confirm_access")
     public String getAccessConfirmation(final Map<String, Object> model, HttpServletRequest request) throws Exception {
 
         final AuthorizationRequest authorizationRequest = (AuthorizationRequest) model.get("authorizationRequest");
         model.put("clientId", authorizationRequest.getClientId());
+        model.put("clientDescription", extractDescription(authorizationRequest.getClientId()));
+        model.put("logo", pathLogo);
         model.put("showCsrf", Boolean.FALSE);
 
         CsrfToken csrfToken = extractCsrfToken(model, request);
@@ -66,5 +80,11 @@ public class CustomApprovalEndpoint {
         }
         builder.append("</ul>");
         return builder.toString();
+    }
+
+    private String extractDescription(final String clientId) {
+        final Optional<RegisteredClientConfiguration> registeredClientConfiguration =
+                clientDetailsConfiguration.getRegisteredClients().stream().filter(registeredClientConfiguration1 -> clientId.equals(registeredClientConfiguration1.getClientId())).findFirst();
+        return registeredClientConfiguration.orElseGet(RegisteredClientConfiguration::new).getClientDescription();
     }
 }

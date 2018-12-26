@@ -3,6 +3,7 @@ oauth2:
   clients:
     registeredClients[0]:
       clientId: first-app
+      clientDescription: 'First Sample App'
       secret: '12345'
       authorizedGrantTypes:
         - authorization_code
@@ -35,12 +36,15 @@ server:
 
 content:
   resources:
-    directory: /home/jelle/Environment/
+    # Make sure it ends with '/' (Available at '/external')
+    directory: /etc/Environment/
   login:
-    introduction: Welkom bij de Ichthus Gemeente website. Hier kunt u inloggen om toegang te krijgen tot de online diensten (o.a. AKB, foto's, etc).
-    not-registered: Heeft u nog geen account bij de Ichthus Gemeente, registreer u dan eerst.
+    introduction: Welcome to the ... congregration website. You can logon here to get access the online services of our congregation (i.e. gift services, photo graphs, etc).
+    not-registered: If you don't have an account yet, please register first (can be invitation only).
   register:
-    introduction: Welkom bij de Ichthus Gemeente website. U moet zich registreren alvorens u toegang kan krijgen tot de online diensten (o.a. AKB, foto's, etc).
+    introduction: Welcome to the ... congregration website. You have to register yourself before you can get access to the online services of our congregation (i.e. gift services, photo graphs, etc).
+  title: Congregation Authorization Services
+  footer: '&copy; Test congregation 2018'
 
 logging:
   level:

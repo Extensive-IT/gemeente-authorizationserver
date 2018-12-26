@@ -3,9 +3,10 @@ package gemeente.authorizationserver.conf;
 import java.util.List;
 import org.springframework.core.style.ToStringCreator;
 
-class RegisteredClientConfiguration {
+public class RegisteredClientConfiguration {
 
     private String clientId;
+    private String clientDescription;
     private String secret;
     private List<String> authorizedGrantTypes;
     private List<String> authorities;
@@ -19,6 +20,14 @@ class RegisteredClientConfiguration {
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
+    }
+
+    public String getClientDescription() {
+        return clientDescription;
+    }
+
+    public void setClientDescription(String clientDescription) {
+        this.clientDescription = clientDescription;
     }
 
     public String getSecret() {

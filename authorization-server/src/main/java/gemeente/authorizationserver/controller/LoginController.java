@@ -31,6 +31,12 @@ public class LoginController {
     @Value("${content.register.introduction:}")
     private String registerIntroduction;
 
+    @Value("${content.footer}")
+    private String footer;
+
+    @Value("${content.title}")
+    private String title;
+
     @Autowired
     private AccountService accountService;
 
@@ -39,6 +45,8 @@ public class LoginController {
         model.put("logo", pathLogo);
         model.put("introduction", loginIntroduction);
         model.put("notRegisteredIntroduction", notRegisteredIntroduction);
+        model.put("title", title);
+        model.put("footer", footer);
         return "login";
     }
 
@@ -75,6 +83,8 @@ public class LoginController {
     private String showRegisterPage(final Map<String, Object> model) {
         model.put("logo", pathLogo);
         model.put("introduction", registerIntroduction);
+        model.put("title", title);
+        model.put("footer", footer);
         return "register";
     }
 }
