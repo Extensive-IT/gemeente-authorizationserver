@@ -1,0 +1,6 @@
+FROM openjdk:11-jdk
+VOLUME /tmp
+ARG DEPENDENCY=target/dependency
+COPY build/libs/*.jar /app/lib
+EXPOSE 8080
+ENTRYPOINT ["java","-cp","app:app/lib/*","gemeente.authorizationserver.AuthorizationserverApplication"]
