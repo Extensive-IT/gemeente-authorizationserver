@@ -8,11 +8,10 @@
 
         <img class="mb-4" th:src="${logo}" style="max-width: 280px;"/>
         <h1 class="h3 mb-3 font-weight-normal">Autorisatie</h1>
-        <p>Wilt u dat applicatie
+        <p>Geeft u
           <span th:text="${clientDescription}" th:unless="${#strings.isEmpty(clientDescription)}"></span>
-          <span th:text="${'(' + clientId + ')'}" th:unless="${#strings.isEmpty(clientDescription)}"></span>
           <span th:text="${clientId}" th:if="${#strings.isEmpty(clientDescription)}"></span>
-          toegang heeft tot uw account gegevens (gebruikersnummer, NAW)?</p>
+          toegang tot uw gegevens (gebruikersnummer, NAW)?</p>
         <input name="user_oauth_approval" value="true" type="hidden"/>
         <th:block th:if="${showCsrf}">
           <input type="hidden" th:name="${csrfTokenName}" th:value="${csrfTokenValue}"/>
