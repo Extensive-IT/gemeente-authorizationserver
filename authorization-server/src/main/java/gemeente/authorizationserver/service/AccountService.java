@@ -70,4 +70,9 @@ public class AccountService {
             throw new AccountCreationException("User cannot be created at the moment, due: " + e.getMessage());
         }
     }
+
+    public List<Account> getAccounts() {
+        final List<Account> accounts = this.jdbcTemplate.query("SELECT a.id, a.registration_reference, a.salutation, a.address, a.postal_code, a.city, a.email FROM accounts a ORDER BY a.salutation", new Object[]{ }, new AccountRowMapper());
+        return accounts;
+    }
 }
