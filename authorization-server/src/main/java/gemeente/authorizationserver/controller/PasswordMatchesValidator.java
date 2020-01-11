@@ -12,7 +12,14 @@ public class PasswordMatchesValidator
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){
-        UserModel user = (UserModel) obj;
-        return user.getPassword().equals(user.getMatchingPassword());
+        if (obj instanceof UserModel) {
+            UserModel user = (UserModel) obj;
+            return user.getPassword().equals(user.getMatchingPassword());
+        }
+        if (obj instanceof PasswordResetModel) {
+            PasswordResetModel user = (PasswordResetModel) obj;
+            return user.getPassword().equals(user.getMatchingPassword());
+        }
+        return false;
     }
 }

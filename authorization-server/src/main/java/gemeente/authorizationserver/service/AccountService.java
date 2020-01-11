@@ -26,6 +26,9 @@ public class AccountService {
     @Autowired
     private AccountJdbcUserDetailsManager accountJdbcUserDetailsManager;
 
+    @Autowired
+    private EmailService emailService;
+
     /**
      * Get account by username
      * @param username not null
@@ -90,6 +93,34 @@ public class AccountService {
         catch (RuntimeException e) {
             throw new AccountCreationException("User cannot be created at the moment, due: " + e.getMessage());
         }
+    }
+
+    public void updateUser(final Account account, final String userName, final String password) throws AccountUpdateException {
+        if (!accountJdbcUserDetailsManager.userExists(userName)) {
+            throw new AccountUpdateException("User " + userName + " does not exists.");
+        }
+
+        accountJdbcUserDetailsManager.updatePassword(userName, passwordEncoder.encode(password));
+        accountJdbcUserDetailsManager.resetToken(account, account.getEmailAddress());
+    }
+
+    public UUID createResetToken(final Account account, final String email, final ResetToken resetToken) {
+        resetToken.setToken(UUID.randomUUID());
+        accountJdbcUserDetailsManager.storeResetToken(account, email, resetToken.getToken());
+        emailService.sendPasswordReset(account, resetToken);
+        return resetToken.getToken();
+    }
+
+    public Optional<Account> getAccountByToken(final String token) {
+        String username = getUsernameByToken(token);
+        if (username != null) {
+            return Optional.of(this.getAccount(username));
+        }
+        return Optional.empty();
+    }
+
+    public String getUsernameByToken(final String token) {
+        return accountJdbcUserDetailsManager.getUserNameByToken(token);
     }
 
     public List<Account> getAccounts() {

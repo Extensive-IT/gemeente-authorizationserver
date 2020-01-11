@@ -38,13 +38,28 @@ content:
   resources:
     # Make sure it ends with '/' (Available at '/external')
     directory: /etc/Environment/
+  email:
+    from-display: Test
+    from: test@test.com
+    resetpassword:
+      subject: Reset your password
   login:
     introduction: Welcome to the ... congregration website. You can logon here to get access the online services of our congregation (i.e. gift services, photo graphs, etc).
     not-registered: If you don't have an account yet, please register first (can be invitation only).
+    recover-password-heading: Recover access
+    recover-password: Please supply your e-mail and we will send you a 'reset' password link
+    reset-password-heading: Reset your password
+    reset-password: Please note your username and supply a new password for your account.
   register:
     introduction: Welcome to the ... congregration website. You have to register yourself before you can get access to the online services of our congregation (i.e. gift services, photo graphs, etc).
   title: Congregation Authorization Services
   footer: '&copy; Test congregation 2018'
+  baseUrl: http://localhost
+
+spring:
+  mail:
+    host: localhost
+    port: 1025
 
 logging:
   level:

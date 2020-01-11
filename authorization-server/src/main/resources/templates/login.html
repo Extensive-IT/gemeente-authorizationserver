@@ -22,6 +22,7 @@
             <input id="password" name="password" type="password" class="form-control" placeholder="Wachtwoord" required>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
+            <p><a th:href="@{/recover-password}">Wachtwoord vergeten?</a></p>
             <p class="mt-5 mb-3 text-muted" th:utext="${footer}">&copy; 2018</p>
         </form>
     </body>

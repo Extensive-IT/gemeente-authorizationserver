@@ -25,6 +25,7 @@ CREATE TABLE `users` (
   `password` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` boolean NOT NULL,
   `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reset_token` varchar(38) COLLATE utf8mb4_unicode_ci NULL,
   primary key (`id`),
   unique key(`username`),
   FOREIGN KEY (`account_id`) REFERENCES accounts(`id`)
