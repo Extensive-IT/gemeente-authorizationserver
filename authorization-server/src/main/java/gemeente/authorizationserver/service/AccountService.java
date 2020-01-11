@@ -46,7 +46,28 @@ public class AccountService {
         return accounts.stream().findAny();
     }
 
+    /**
+     * Get account by email address
+     * @param registrationReference not null
+     * @return optional of nullable
+     */
+    public Optional<Account> getAccountByRegistrationReference(final String registrationReference) {
+        final List<Account> accounts = this.jdbcTemplate.query("SELECT a.id, a.registration_reference, a.salutation, a.address, a.postal_code, a.city, a.email FROM accounts a WHERE a.registration_reference = ?", new Object[]{ registrationReference }, new AccountRowMapper());
+        return accounts.stream().findAny();
+    }
+
     public Account createAccount(final Account account) {
+        Optional<Account> existingAccountOptionalEmail = this.getAccountByEmail(account.getEmailAddress());
+        if (existingAccountOptionalEmail.isPresent()) {
+            return existingAccountOptionalEmail.get();
+        }
+
+        Optional<Account> existingAccountOptionalRegistrationReference = this.getAccountByRegistrationReference(account.getRegistrationReferenceId());
+        if (existingAccountOptionalRegistrationReference.isPresent()) {
+            return existingAccountOptionalRegistrationReference.get();
+        }
+
+        // Create account
         account.setId(UUID.randomUUID());
 
         // define query arguments
