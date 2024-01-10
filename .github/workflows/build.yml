@@ -32,4 +32,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the Docker image
-        run: docker build -f ./authorization-server/Dockerfile-assemble -t $IMAGE_NAME:${{ github.sha }} ./authorization-server/
+        run: docker build -f ./authorization-server/Dockerfile-assemble -t ${{ env.IMAGE_NAME }}:${{ github.sha }} ./authorization-server/
