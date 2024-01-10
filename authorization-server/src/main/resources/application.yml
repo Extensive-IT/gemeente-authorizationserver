@@ -55,6 +55,7 @@ content:
   title: Congregation Authorization Services
   footer: '&copy; Test congregation 2018'
   baseUrl: http://localhost
+  defaultAppUrl: http://some-app/
 
 spring:
   mail:

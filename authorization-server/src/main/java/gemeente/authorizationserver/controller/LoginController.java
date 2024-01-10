@@ -54,8 +54,16 @@ public class LoginController {
     @Value("${content.baseUrl}")
     private String baseUrl;
 
+    @Value("${content.defaultAppUrl}")
+    private String defaultAppUrl;
+
     @Autowired
     private AccountService accountService;
+
+    @GetMapping("/")
+    public String homeApp() {
+        return "redirect:" + this.defaultAppUrl;
+    }
 
     @GetMapping("/show-login")
     public String login(final Map<String, Object> model) {
