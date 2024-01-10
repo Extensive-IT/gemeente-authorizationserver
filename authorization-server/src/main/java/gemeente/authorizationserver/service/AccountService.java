@@ -35,8 +35,7 @@ public class AccountService {
      * @return not null, should exists
      */
     public Account getAccount(final String username) {
-        final Account account = this.jdbcTemplate.queryForObject("SELECT a.id, a.registration_reference, a.salutation, a.address, a.postal_code, a.city, u.email FROM accounts a INNER JOIN users u ON (a.id = u.account_id) WHERE u.username = ?", new Object[]{username}, new AccountRowMapper());
-        return account;
+        return this.jdbcTemplate.queryForObject("SELECT a.id, a.registration_reference, a.salutation, a.address, a.postal_code, a.city, u.email FROM accounts a INNER JOIN users u ON (a.id = u.account_id) WHERE u.username = ?", new Object[]{username}, new AccountRowMapper());
     }
 
     /**
@@ -46,6 +45,11 @@ public class AccountService {
      */
     public Optional<Account> getAccountByEmail(final String email) {
         final List<Account> accounts = this.jdbcTemplate.query("SELECT a.id, a.registration_reference, a.salutation, a.address, a.postal_code, a.city, a.email FROM accounts a WHERE a.email = ?", new Object[]{ email }, new AccountRowMapper());
+        return accounts.stream().findAny();
+    }
+
+    public Optional<Account> getAccountById(final String id) {
+        final List<Account> accounts = this.jdbcTemplate.query("SELECT a.id, a.registration_reference, a.salutation, a.address, a.postal_code, a.city, a.email FROM accounts a WHERE a.id = ?", new Object[]{ id }, new AccountRowMapper());
         return accounts.stream().findAny();
     }
 
@@ -81,6 +85,38 @@ public class AccountService {
                 this.jdbcTemplate.update("INSERT INTO accounts (id, registration_reference, salutation, address, postal_code, city, email) VALUES (?, ?, ?, ?, ?, ?, ?)", params, types);
         return account;
     }
+
+    public Account updateOrCreateAccount(final Account account) {
+        Optional<Account> accountOptional = this.getAccount(account.getRegistrationReferenceId(), account.getEmailAddress());
+        if (accountOptional.isPresent()) {
+            final Account existingAccount = accountOptional.get();
+            final Object[] params = new Object[] {
+                    account.getFullName(),
+                    account.getAddress().getStreet(),
+                    account.getAddress().getPostalCode(),
+                    account.getAddress().getCity(),
+                    account.getEmailAddress(),
+                    existingAccount.getId().toString() };
+            final int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
+            final int result =
+                    this.jdbcTemplate.update("UPDATE accounts SET salutation = ?, address = ?, postal_code = ?, city = ?, email = ? WHERE id = ?", params, types);
+            return this.getAccountById(existingAccount.getId().toString()).orElseThrow(IllegalStateException::new);
+        }
+        else {
+            return this.createAccount(account);
+        }
+    }
+
+    Optional<Account> getAccount(String registrationReference, String emailAddress) {
+        Optional<Account> existingAccountOptionalRegistrationReference = this.getAccountByRegistrationReference(registrationReference);
+        if (existingAccountOptionalRegistrationReference.isPresent()) {
+            return existingAccountOptionalRegistrationReference;
+        }
+
+        Optional<Account> existingAccountOptionalEmail = this.getAccountByEmail(emailAddress);
+        return existingAccountOptionalEmail;
+    }
+
 
     public void createUser(final Account account, final String userName, final String password) throws AccountCreationException {
         if (accountJdbcUserDetailsManager.userExists(userName)) {

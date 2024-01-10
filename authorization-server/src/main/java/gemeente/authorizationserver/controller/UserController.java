@@ -43,6 +43,18 @@ public class UserController {
         return new AccountInformationResponse(createdAccount);
     }
 
+    @PostMapping("/user/account/import")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public AccountInformationResponse createOrUpdateAccount(@RequestBody final AccountCreationRequest accountCreationRequest, final Principal principal) {
+        final Account account = new Account();
+        account.setRegistrationReferenceId(accountCreationRequest.getRegistrationReferenceId());
+        account.setEmailAddress(accountCreationRequest.getEmailAddress());
+        account.setFullName(accountCreationRequest.getFullName());
+        account.setAddress(accountCreationRequest.getAddress());
+        final Account createdAccount = this.accountService.updateOrCreateAccount(account);
+        return new AccountInformationResponse(createdAccount);
+    }
+
     @GetMapping("/user/account/registrations")
     @PreAuthorize("hasAuthority('ADMIN')")
     public Accounts getAllRegistrations() {
